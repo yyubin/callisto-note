@@ -1,0 +1,6 @@
+{
+ "ID": "spring-example-server",
+ "Name": "spring-example-server",
+ "Address": "127.0.0.1",
+ "Port": 9000
+}

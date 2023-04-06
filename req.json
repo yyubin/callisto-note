@@ -1,0 +1,6 @@
+{
+ "Name": "nodejs-example-server",
+ "ID": "nodejs-example-server",
+ "Address": "127.0.0.1",
+ "Port": 3001
+}
