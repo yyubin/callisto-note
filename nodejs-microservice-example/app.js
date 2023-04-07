@@ -1,19 +1,31 @@
 const express = require('express');
 const consul = require('consul');
+const kafka = require('kafka-node');
 const axios = require('axios');
 const app = express();
+
+const client = new kafka.KafkaClient({ kafkaHost: 'localhost:9092' });
+const consumer = new kafka.Consumer(client, [{ topic: 'example-topic' }], { autoCommit: true });
+
+consumer.on('message', (message) => {
+    console.log(`Received message: ${message.value}`);
+  });
+  
+  consumer.on('error', (err) => {
+    console.error('Failed to subscribe to Kafka topic', err);
+  });
 
 const consulClient = new consul({
     host: '127.0.0.1',
     port: 8500,
 });
 
-app.get('/example', function (req, res) {
+app.get('/nodejs/example', function (req, res) {
     res.send('Hello node.js');
 });
 
-app.get('/to-spring-example', function (req, res) {
-    axios.get('http://localhost:9000/hello')
+app.get('/nodejs/to-spring-example', function (req, res) {
+    axios.get('http://localhost:8080/spring/hello')
     .then(response => {
         res.send(response.data);
     })
@@ -23,8 +35,8 @@ app.get('/to-spring-example', function (req, res) {
     });
 });
 
-app.get('/to-spring-to-go', function (req, res) {
-    axios.get('http://localhost:9000/example')
+app.get('/nodejs/to-spring-to-go', function (req, res) {
+    axios.get('http://localhost:8080/spring/example')
     .then(response => {
         res.send(response.data);
     })
@@ -42,7 +54,7 @@ const jsonData = {
 };
 
 // JSON 데이터 반환 API
-app.get('/api', (req, res) => {
+app.get('/nodejs/api', (req, res) => {
   res.json(jsonData);
 });
 

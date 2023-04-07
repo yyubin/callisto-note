@@ -20,25 +20,26 @@ spring:
           predicates:
             - Path=/go/**
           filters:
-            - RewritePath=/go/(?<path>.*), /$\{path}
+            #- RewritePath=/go/(?<path>.*), /$\{path}
             - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: Hi, there
-                preLogger: true
-                postLogger: true
+#            - name: LoggingFilter
+#              args:
+#                baseMessage: Hi, there
+#                preLogger: true
+#                postLogger: true
         - id: spring-example-server
           uri: lb://spring-example-server
           predicates:
             - Path=/spring/**
           filters:
-            - RewritePath=/spring/(?<path>.*), /$\{path}
+            #- RewritePath=/spring/(?<path>.*), /$\{path}
+
         - id: nodejs-example-server
           uri: lb://nodejs-example-server
           predicates:
             - Path=/nodejs/**
           filters:
-            - RewritePath=/nodejs/(?<path>.*), /$\{path}
+            #- RewritePath=/nodejs/(?<path>.*), /$\{path}
       default-filters:
         - name: GlobalFilter
           args:

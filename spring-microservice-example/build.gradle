@@ -28,8 +28,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // kafka, 스프링 버전 2.7.10 기준 2.7.2 사용
+    implementation 'org.springframework.kafka:spring-kafka'
 }
 
 dependencyManagement {

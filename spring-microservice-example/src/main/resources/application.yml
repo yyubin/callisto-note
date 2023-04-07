@@ -1,6 +1,13 @@
 spring:
   application:
     name: spring-example-server
+  # kafka 설정
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  # consul에 등록
   cloud:
     consul:
       enabled: true

@@ -50,7 +50,36 @@ func barHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func nodeHandler(w http.ResponseWriter, r *http.Request) {
-	url := "http://localhost:3001/api" // Node.js 마이크로서비스의 API 경로
+	url := "http://localhost:8080/nodejs/api" // Node.js 마이크로서비스의 API 경로
+	req, err := http.NewRequest("GET", url, nil)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Fprint(w, string(body))
+}
+
+func springHandler(w http.ResponseWriter, r *http.Request) {
+	url := "http://localhost:8080/spring/hello" // Node.js 마이크로서비스의 API 경로
 	req, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
@@ -86,6 +115,7 @@ func NewHttpHandler() http.Handler {
 	mux.Handle("/go/foo", &fooHandler{})
 
 	mux.HandleFunc("/go/to-node-example", nodeHandler)
+	mux.HandleFunc("/go/to-spring-example", springHandler)
 
 	return mux
 }
